@@ -31,5 +31,5 @@ Contributions to this project are welcome. Please ensure that your code adheres 
 License
 MIT License - Feel free to use, modify, and distribute this software as per the terms of the license.
 
-Disclaimer
+
 This script is for educational purposes only. Users are responsible for ensuring that their use of the script complies with the terms of service of the scraped website and applicable laws.I am not responsible for any misuse or legal implications arising from the use of this script.
