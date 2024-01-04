@@ -1,5 +1,7 @@
+import os
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 def find_apple_us_subsidiaries(link):
     states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
@@ -23,7 +25,6 @@ def find_apple_us_subsidiaries(link):
             return f"Failed to retrieve the webpage, Status code: {response.status_code}"
         soup = BeautifulSoup(response.content, 'html.parser')
 
-
         tables = soup.find_all('table')
         for table in tables:
             rows = table.find_all('tr')
@@ -41,9 +42,13 @@ def find_apple_us_subsidiaries(link):
     except requests.exceptions.RequestException as e:
         return f"An error occurred: {e}"
 
-link = input("Vai Link Den : ")
+link = "https://www.sec.gov/Archives/edgar/data/874761/000087476121000015/aes1231202010-kexhibit211.htm"
 us_apple_subsidiaries = find_apple_us_subsidiaries(link)
 
-for state, count in us_apple_subsidiaries.items():
-    if count > 0:
-        print(f"{state}: {count}")
+downloads_path = os.path.join(os.path.expanduser('~'), 'Downloads')
+excel_file_path = os.path.join(downloads_path, 'Data.xlsx')
+
+df = pd.DataFrame(list(us_apple_subsidiaries.items()), columns=['State', 'Count'])
+df.to_excel(excel_file_path, index=False)
+
+print(f"Data saved to {excel_file_path}")
